@@ -1,14 +1,11 @@
 package com.yeonkyu.itbooksdk
 
 import com.yeonkyu.itbooksdk.api.ItBookClient
+import com.yeonkyu.itbooksdk.api.ItBookHandler
 
 object ItBookStore {
 
     private var itBookClient: ItBookClient? = null
-
-    fun getItBookClient(): ItBookClient {
-        return itBookClient ?: throw Exception("you must first call initItBook()")
-    }
 
     @Synchronized
     fun initItBook(): Boolean {
@@ -19,5 +16,13 @@ object ItBookStore {
         } else {
             return false
         }
+    }
+
+    private fun getItBookClient(): ItBookClient {
+        return itBookClient ?: throw Exception("you must first call initItBook()")
+    }
+
+    fun searchByKeyword(keyword: String, page: Int, itBookHandler: ItBookHandler) {
+        getItBookClient().searchByKeyword(keyword, page, itBookHandler)
     }
 }

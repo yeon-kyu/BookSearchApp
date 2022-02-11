@@ -5,7 +5,7 @@ import com.yeonkyu.itbooksdk.exception.ItBookException
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class ItBookClient constructor(
+internal class ItBookClient constructor(
     private val service: ItBookService
 ) {
     fun searchByKeyword(keyword: String, page: Int, itBookHandler: ItBookHandler) {
