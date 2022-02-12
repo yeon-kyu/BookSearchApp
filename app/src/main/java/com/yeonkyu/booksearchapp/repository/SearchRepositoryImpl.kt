@@ -9,22 +9,22 @@ class SearchRepositoryImpl @Inject constructor(
 
 ) : SearchRepository {
 
-    fun searchByKeyword(
+    override fun searchByKeyword(
         keyword: String,
         page: Int,
         onStart: () -> Unit,
-        onSuccess: () -> Unit,
-        onFail: () -> Unit
+        onSuccess: (SearchListResponse) -> Unit,
+        onFail: (Exception) -> Unit
     ) {
         onStart()
 
         ItBookStore.searchByKeyword(keyword, page, object : ItBookHandler {
             override fun onSuccess(response: SearchListResponse) {
-                onSuccess()
+                onSuccess(response)
             }
 
             override fun onFail(exception: Exception) {
-                onFail()
+                onFail(exception)
             }
 
         })

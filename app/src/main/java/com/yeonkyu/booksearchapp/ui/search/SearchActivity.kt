@@ -2,27 +2,53 @@ package com.yeonkyu.booksearchapp.ui.search
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yeonkyu.booksearchapp.R
-import com.yeonkyu.itbooksdk.ItBookStore
-import com.yeonkyu.itbooksdk.api.ItBookHandler
-import com.yeonkyu.itbooksdk.response.SearchListResponse
+import com.yeonkyu.booksearchapp.databinding.ActivitySearchBinding
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class SearchActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivitySearchBinding
+    private val viewModel by viewModels<SearchViewModel>()
+
+    private lateinit var bookAdapter: BookAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        ItBookStore.searchByKeyword("MongoDB", 1, object : ItBookHandler {
-            override fun onSuccess(response: SearchListResponse) {
-                Timber.e("response : ${response}")
-            }
+        setUpBinding()
+        setUpListAdapter()
+        observeData()
 
-            override fun onFail(exception: Exception) {
-                Timber.e("exception : $exception")
-            }
-        })
+        viewModel.searchByKeyword("MongoDB")
+    }
+
+    private fun setUpBinding() {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_search)
+        binding.lifecycleOwner = this
+    }
+
+    private fun setUpListAdapter() {
+        bookAdapter = BookAdapter { view, book ->
+            //todo
+        }
+        binding.recyclerview.apply {
+            adapter = bookAdapter
+            layoutManager = GridLayoutManager(
+                this@SearchActivity,
+                2
+            )
+        }
+    }
+
+    private fun observeData() {
+        viewModel.bookList.observe(this) {
+            bookAdapter.submitList(it)
+        }
     }
 }
