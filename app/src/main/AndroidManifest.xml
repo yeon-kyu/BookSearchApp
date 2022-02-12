@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:name=".BookSearchApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -21,6 +21,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <provider
+            android:authorities="${applicationId}.androidx-startup"
+            android:name="androidx.startup.InitializationProvider"
+            android:exported="false">
+            <meta-data
+                android:name="com.yeonkyu.booksearchapp.initializer.TimberInitializer"
+                android:value="androidx.startup" />
+
+            <meta-data
+                android:name="com.yeonkyu.booksearchapp.initializer.ItBookInitializer"
+                android:value="androidx.startup" />
+        </provider>
     </application>
 
 </manifest>
