@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BookSearchApp">
         <activity
-            android:name=".SearchActivity"
+            android:name=".ui.search.SearchActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.detail.DetailActivity" />
         
         <provider
             android:authorities="${applicationId}.androidx-startup"
