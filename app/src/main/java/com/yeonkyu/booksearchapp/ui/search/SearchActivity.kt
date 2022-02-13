@@ -5,9 +5,9 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.yeonkyu.booksearchapp.R
 import com.yeonkyu.booksearchapp.databinding.ActivitySearchBinding
+import com.yeonkyu.booksearchapp.util.RecyclerViewPager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,20 +17,29 @@ class SearchActivity : AppCompatActivity() {
     private val viewModel by viewModels<SearchViewModel>()
 
     private lateinit var bookAdapter: BookAdapter
+    private lateinit var pager: RecyclerViewPager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setUpBinding()
+        setUpView()
         setUpListAdapter()
         observeData()
-
-        viewModel.searchByKeyword("MongoDB")
     }
 
     private fun setUpBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search)
         binding.lifecycleOwner = this
+    }
+
+    private fun setUpView() {
+        binding.searchCancelBt.setOnClickListener {
+            val keyword = binding.searchEt.text.toString()
+            viewModel.resetBookList()
+            pager.resetPage()
+            viewModel.fetchNextBookList(keyword, 1)
+        }
     }
 
     private fun setUpListAdapter() {
@@ -43,12 +52,18 @@ class SearchActivity : AppCompatActivity() {
                 this@SearchActivity,
                 2
             )
+            pager = RecyclerViewPager(
+                recyclerView = this,
+                isLoading = { viewModel.isLoading.value == true },
+                loadNext = { nextPage -> viewModel.fetchNextBookList(null, nextPage) },
+                isEnd = { viewModel.isEnd.value == true }
+            )
         }
     }
 
     private fun observeData() {
         viewModel.bookList.observe(this) {
-            bookAdapter.submitList(it)
+            bookAdapter.submitList(it.toList())
         }
     }
 }
