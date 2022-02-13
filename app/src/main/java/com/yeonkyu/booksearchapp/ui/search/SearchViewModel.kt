@@ -55,6 +55,7 @@ class SearchViewModel @Inject constructor(
             },
             onFail = {
                 isLoading.postValue(false)
+                Timber.e("search error $it")
                 //todo 다이얼로그 띄우기
             }
         )
