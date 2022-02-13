@@ -9,6 +9,7 @@ import com.yeonkyu.booksearchapp.R
 import com.yeonkyu.booksearchapp.databinding.ActivitySearchBinding
 import com.yeonkyu.booksearchapp.util.RecyclerViewPager
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class SearchActivity : AppCompatActivity() {
@@ -31,14 +32,16 @@ class SearchActivity : AppCompatActivity() {
     private fun setUpBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search)
         binding.lifecycleOwner = this
+        binding.viewModel = viewModel
     }
 
     private fun setUpView() {
-        binding.searchCancelBt.setOnClickListener {
+        binding.searchBt.setOnClickListener {
             val keyword = binding.searchEt.text.toString()
-            viewModel.resetBookList()
-            pager.resetPage()
-            viewModel.fetchNextBookList(keyword, 1)
+            search(keyword)
+        }
+        binding.searchEraseBt.setOnClickListener {
+            binding.searchEt.setText("")
         }
     }
 
@@ -64,6 +67,22 @@ class SearchActivity : AppCompatActivity() {
     private fun observeData() {
         viewModel.bookList.observe(this) {
             bookAdapter.submitList(it.toList())
+            if (it.isEmpty()) {
+                binding.searchExplainTxt.text = getString(R.string.search_empty_result)
+            } else {
+                binding.searchExplainTxt.text = ""
+            }
         }
+    }
+
+    private fun search(keyword: String) {
+        viewModel.resetBookList()
+        pager.resetPage()
+        viewModel.fetchNextBookList(keyword, 1)
+    }
+
+    override fun onDestroy() {
+        binding.searchHeaderLayout.clearFocus()
+        super.onDestroy()
     }
 }

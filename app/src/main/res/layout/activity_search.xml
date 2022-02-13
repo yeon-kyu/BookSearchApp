@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.yeonkyu.booksearchapp.ui.search.SearchViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,17 +34,13 @@
                 android:layout_marginBottom="20dp"
                 android:autofillHints="no"
                 android:background="@drawable/bg_search_et"
-                android:drawableStart="@drawable/ic_search"
-                android:drawablePadding="12dp"
-                android:drawableTint="@color/primary"
-                android:elevation="4dp"
                 android:fontFamily="@font/notosanskr_medium"
                 android:hint="@string/search_enter_keyword"
                 android:inputType="text"
                 android:maxLines="1"
                 android:paddingStart="20dp"
                 android:paddingTop="10dp"
-                android:paddingEnd="20dp"
+                android:paddingEnd="40dp"
                 android:paddingBottom="10dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray"
@@ -49,20 +49,33 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/search_cancel_bt"
+                android:id="@+id/search_erase_bt"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="6dp"
+                android:background="@null"
+                android:paddingStart="5dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="4dp"
+                android:paddingBottom="3dp"
+                android:src="@drawable/ic_cancel"
+                app:layout_constraintBottom_toBottomOf="@+id/search_et"
+                app:layout_constraintEnd_toEndOf="@+id/search_et"
+                app:layout_constraintTop_toTopOf="@+id/search_et"
+                app:tint="@color/gray" />
+
+            <ImageView
+                android:id="@+id/search_bt"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginEnd="8dp"
-                android:paddingStart="5dp"
-                android:paddingTop="4dp"
-                android:paddingEnd="3dp"
-                android:paddingBottom="4dp"
-                android:src="@drawable/ic_cancel"
+                android:background="@null"
+                android:src="@drawable/ic_search"
                 app:layout_constraintBottom_toBottomOf="@+id/search_et"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/search_et"
                 app:layout_constraintTop_toTopOf="@+id/search_et"
-                app:tint="@color/gray" />
+                app:tint="@color/primary" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -70,12 +83,36 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:clipToPadding="false"
+            android:fadeScrollbars="false"
             android:paddingStart="2dp"
             android:paddingEnd="2dp"
             android:scrollbars="vertical"
-            android:fadeScrollbars="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/search_header_layout"
             tools:itemCount="20" />
+
+        <ProgressBar
+            android:id="@+id/search_progress_bar"
+            visibleIf="@{viewModel.isLoading}"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:indeterminateTint="@color/primary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/search_explain_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/notosanskr_regular"
+            android:textColor="@color/dark_gray"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/search_progress_bar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_header_layout" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
