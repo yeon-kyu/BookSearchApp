@@ -7,7 +7,7 @@ import retrofit2.http.Path
 
 internal interface ItBookService {
     @GET("1.0/search/{query}/{page}")
-    fun searchByKeyword(
+    fun searchBooks(
         @Path("query") keyword: String,
         @Path("page") page: Int
     ): Single<SearchListResponse>
