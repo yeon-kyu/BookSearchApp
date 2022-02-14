@@ -2,6 +2,9 @@ package com.yeonkyu.itbooksdk.util
 
 import com.yeonkyu.itbooksdk.response.SearchListResponse
 import com.yeonkyu.itbooksdk.response.SearchResponse
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.mockito.Mockito
 
 object MockUtil {
@@ -23,4 +26,9 @@ object MockUtil {
             mockSearchResponse()
         )
     )
+
+    fun mockErrorResponseBody(): ResponseBody {
+        val errorResponse = "{\n" + "\"type\": \"error\",\n" + "\"message\": \"What you were looking for isn't here.\"\n" + "}"
+        return errorResponse.toResponseBody("application/json".toMediaTypeOrNull())
+    }
 }

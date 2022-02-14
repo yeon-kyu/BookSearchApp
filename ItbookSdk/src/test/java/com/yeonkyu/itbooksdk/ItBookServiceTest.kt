@@ -15,9 +15,9 @@ internal class ItBookServiceTest : ApiAbstract<ItBookService>() {
     }
 
     @Test
-    fun `search By Keyword Test`() {
+    fun `search Books Test`() {
         enqueueResponse("/SearchListResponse.json")
-        val response = service.searchByKeyword("MongoDB", 1)
+        val response = service.searchBooks("MongoDB", 1)
             .blockingGet()
         mockWebServer.takeRequest()
 
