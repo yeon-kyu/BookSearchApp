@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.yeonkyu.booksearchapp.R
 import com.yeonkyu.booksearchapp.databinding.ActivitySearchBinding
 import com.yeonkyu.booksearchapp.util.RecyclerViewPager
+import com.yeonkyu.booksearchapp.util.makeDialog
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -27,6 +28,7 @@ class SearchActivity : AppCompatActivity() {
         setUpView()
         setUpListAdapter()
         observeData()
+        observeDialogEvent()
     }
 
     private fun setUpBinding() {
@@ -72,6 +74,12 @@ class SearchActivity : AppCompatActivity() {
             } else {
                 binding.searchExplainTxt.text = ""
             }
+        }
+    }
+
+    private fun observeDialogEvent() {
+        viewModel.dialogEvent.observe(this) {
+            makeDialog(it, null)
         }
     }
 

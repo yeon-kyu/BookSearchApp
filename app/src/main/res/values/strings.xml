@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">BookSearchApp</string>
 
+    <!--  common  -->
+    <string name="dialog_confirm">확인</string>
     <!--  search  -->
     <string name="search_enter_keyword">검색어를 입력해주세요</string>
     <string name="search_empty_result">검색 결과가 없습니다.</string>

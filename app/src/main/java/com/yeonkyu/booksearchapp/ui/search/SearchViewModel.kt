@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.yeonkyu.booksearchapp.data.mapper.toBook
 import com.yeonkyu.booksearchapp.data.model.Book
 import com.yeonkyu.booksearchapp.repository.SearchRepository
+import com.yeonkyu.booksearchapp.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import timber.log.Timber
 import javax.inject.Inject
@@ -19,6 +20,8 @@ class SearchViewModel @Inject constructor(
 
     private val _bookList = ArrayList<Book>()
     val bookList = MutableLiveData<List<Book>>()
+
+    val dialogEvent = SingleLiveEvent<String>()
 
     private var lastKeyword: String? = null
 
@@ -56,7 +59,7 @@ class SearchViewModel @Inject constructor(
             onFail = {
                 isLoading.postValue(false)
                 Timber.e("search error $it")
-                //todo 다이얼로그 띄우기
+                dialogEvent.postValue(it.message)
             }
         )
     }
