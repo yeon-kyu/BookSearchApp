@@ -1,5 +1,7 @@
 package com.yeonkyu.itbooksdk.exception
 
-class ItBookException(private val errorType: ErrorType, msg: String?) : Exception() {
-    override val message: String? = msg
+class ItBookException(msg: String, code: Int?) : Exception() {
+
+    override val message: String = msg
+    val statusCode = code
 }

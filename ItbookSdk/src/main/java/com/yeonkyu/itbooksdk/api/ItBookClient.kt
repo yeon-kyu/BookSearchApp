@@ -1,11 +1,12 @@
 package com.yeonkyu.itbooksdk.api
 
-import com.yeonkyu.itbooksdk.exception.ErrorType
 import com.yeonkyu.itbooksdk.exception.ItBookException
 import com.yeonkyu.itbooksdk.response.SearchListResponse
+import com.yeonkyu.itbooksdk.exception.ExceptionGenerator.generateHttpException
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
+import retrofit2.HttpException
 
 internal class ItBookClient constructor(
     private val service: ItBookService
@@ -17,15 +18,17 @@ internal class ItBookClient constructor(
             .subscribe({
                 itBookSearchHandler.onSuccess(it)
             }, {
-                itBookSearchHandler.onFail(ItBookException(ErrorType.NETWORK_ERROR, it.message))
+                when (it) {
+                    is HttpException -> itBookSearchHandler.onFail(generateHttpException(it.code()))
+                    else -> itBookSearchHandler.onFail(ItBookException(it.message ?: "searchNormalException", null))
+                }
             })
     }
 
     fun searchWithOperatorAnd(inc1: String, inc2: String, page: Int, itBookSearchHandler: ItBookSearchHandler) {
         Single.zip(
             service.searchBooks(inc1, page),
-            service.searchBooks(inc2, page),
-            { leftResponse, rightResponse ->
+            service.searchBooks(inc2, page), { leftResponse, rightResponse ->
                 SearchListResponse(
                     total = leftResponse.total + rightResponse.total,
                     page = leftResponse.page,
@@ -38,7 +41,10 @@ internal class ItBookClient constructor(
             .subscribe({
                 itBookSearchHandler.onSuccess(it)
             }, {
-                itBookSearchHandler.onFail(ItBookException(ErrorType.NETWORK_ERROR, it.message))
+                when (it) {
+                    is HttpException -> itBookSearchHandler.onFail(generateHttpException(it.code()))
+                    else -> itBookSearchHandler.onFail(ItBookException(it.message ?: "searchWithOperatorAndException", null))
+                }
             })
     }
 
@@ -61,7 +67,10 @@ internal class ItBookClient constructor(
             .subscribe({
                 itBookSearchHandler.onSuccess(it)
             }, {
-                itBookSearchHandler.onFail(ItBookException(ErrorType.NETWORK_ERROR, it.message))
+                when (it) {
+                    is HttpException -> itBookSearchHandler.onFail(generateHttpException(it.code()))
+                    else -> itBookSearchHandler.onFail(ItBookException(it.message ?: "searchWithOperatorNotException", null))
+                }
             })
     }
 
@@ -72,7 +81,10 @@ internal class ItBookClient constructor(
             .subscribe({
                 itBookInfoHandler.onSuccess(it)
             }, {
-                itBookInfoHandler.onFail(ItBookException(ErrorType.NETWORK_ERROR, it.message))
+                when (it) {
+                    is HttpException -> itBookInfoHandler.onFail(generateHttpException(it.code()))
+                    else -> itBookInfoHandler.onFail(ItBookException(it.message ?: "fetchBookInfoException", null))
+                }
             })
     }
 }
