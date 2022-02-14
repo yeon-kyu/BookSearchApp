@@ -3,7 +3,7 @@ package com.yeonkyu.itbooksdk
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.yeonkyu.itbooksdk.util.MockUtil.mockSearchListResponse
 import com.yeonkyu.itbooksdk.api.ItBookClient
-import com.yeonkyu.itbooksdk.api.ItBookHandler
+import com.yeonkyu.itbooksdk.api.ItBookSearchHandler
 import com.yeonkyu.itbooksdk.api.ItBookService
 import com.yeonkyu.itbooksdk.response.SearchListResponse
 import com.yeonkyu.itbooksdk.util.SchedulersTestRule
@@ -43,7 +43,7 @@ class ItBookClientTest {
         var failData: Exception? = null
 
         // when
-        client.searchByKeyword("MongoDB", 1, object : ItBookHandler {
+        client.searchByKeyword("MongoDB", 1, object : ItBookSearchHandler {
             override fun onSuccess(response: SearchListResponse) {
                 successData = response
             }

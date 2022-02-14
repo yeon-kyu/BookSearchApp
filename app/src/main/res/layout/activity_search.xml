@@ -38,6 +38,7 @@
                 android:hint="@string/search_enter_keyword"
                 android:inputType="text"
                 android:maxLines="1"
+                android:imeOptions="actionSearch"
                 android:paddingStart="20dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="40dp"

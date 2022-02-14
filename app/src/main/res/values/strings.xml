@@ -11,6 +11,9 @@
     <string name="detail_header_text">상세 화면</string>
     <string name="detail_title">제목</string>
     <string name="detail_subtitle">부제목</string>
-    <string name="detail_isbn">ISBN</string>
+    <string name="detail_isbn13">ISBN13</string>
+    <string name="detail_author">작가</string>
+    <string name="detail_description">설명</string>
+    <string name="detail_year">출판 연도</string>
 
 </resources>

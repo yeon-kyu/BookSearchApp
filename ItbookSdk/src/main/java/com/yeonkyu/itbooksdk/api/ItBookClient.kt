@@ -10,18 +10,18 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 internal class ItBookClient constructor(
     private val service: ItBookService
 ) {
-    fun searchNormal(keyword: String, page: Int, itBookHandler: ItBookHandler) {
+    fun searchNormal(keyword: String, page: Int, itBookSearchHandler: ItBookSearchHandler) {
         service.searchBooks(keyword, page)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                itBookHandler.onSuccess(it)
+                itBookSearchHandler.onSuccess(it)
             }, {
-                itBookHandler.onFail(ItBookException(ErrorType.NETWORK_ERROR, it.message))
+                itBookSearchHandler.onFail(ItBookException(ErrorType.NETWORK_ERROR, it.message))
             })
     }
 
-    fun searchWithOperatorAnd(inc1: String, inc2: String, page: Int, itBookHandler: ItBookHandler) {
+    fun searchWithOperatorAnd(inc1: String, inc2: String, page: Int, itBookSearchHandler: ItBookSearchHandler) {
         Single.zip(
             service.searchBooks(inc1, page),
             service.searchBooks(inc2, page),
@@ -36,13 +36,13 @@ internal class ItBookClient constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                itBookHandler.onSuccess(it)
+                itBookSearchHandler.onSuccess(it)
             }, {
-                itBookHandler.onFail(ItBookException(ErrorType.NETWORK_ERROR, it.message))
+                itBookSearchHandler.onFail(ItBookException(ErrorType.NETWORK_ERROR, it.message))
             })
     }
 
-    fun searchWithOperatorNot(inc: String, exc: String, page: Int, itBookHandler: ItBookHandler) {
+    fun searchWithOperatorNot(inc: String, exc: String, page: Int, itBookSearchHandler: ItBookSearchHandler) {
         service.searchBooks(inc, page)
             .subscribeOn(Schedulers.io())
             .map {
@@ -59,9 +59,20 @@ internal class ItBookClient constructor(
             }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                itBookHandler.onSuccess(it)
+                itBookSearchHandler.onSuccess(it)
             }, {
-                itBookHandler.onFail(ItBookException(ErrorType.NETWORK_ERROR, it.message))
+                itBookSearchHandler.onFail(ItBookException(ErrorType.NETWORK_ERROR, it.message))
+            })
+    }
+
+    fun fetchBookInfo(isbn: String, itBookInfoHandler: ItBookInfoHandler) {
+        service.fetchBookInfo(isbn)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                itBookInfoHandler.onSuccess(it)
+            }, {
+                itBookInfoHandler.onFail(ItBookException(ErrorType.NETWORK_ERROR, it.message))
             })
     }
 }

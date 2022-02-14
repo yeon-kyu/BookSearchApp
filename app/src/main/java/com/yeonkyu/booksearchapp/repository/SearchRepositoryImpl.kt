@@ -1,7 +1,7 @@
 package com.yeonkyu.booksearchapp.repository
 
 import com.yeonkyu.itbooksdk.ItBookStore
-import com.yeonkyu.itbooksdk.api.ItBookHandler
+import com.yeonkyu.itbooksdk.api.ItBookSearchHandler
 import com.yeonkyu.itbooksdk.response.SearchListResponse
 import timber.log.Timber
 import javax.inject.Inject
@@ -45,7 +45,7 @@ class SearchRepositoryImpl @Inject constructor(
             inc1 = splitKeyword[0],
             inc2 = splitKeyword[1],
             page = page,
-            itBookHandler = object : ItBookHandler {
+            itBookSearchHandler = object : ItBookSearchHandler {
                 override fun onSuccess(response: SearchListResponse) {
                     onSuccess(response)
                 }
@@ -68,7 +68,7 @@ class SearchRepositoryImpl @Inject constructor(
             inc = splitKeyword[0],
             exc = splitKeyword[1],
             page = page,
-            itBookHandler = object : ItBookHandler {
+            itBookSearchHandler = object : ItBookSearchHandler {
                 override fun onSuccess(response: SearchListResponse) {
                     onSuccess(response)
                 }
@@ -89,7 +89,7 @@ class SearchRepositoryImpl @Inject constructor(
         ItBookStore.searchNormal(
             keyword = keyword,
             page = page,
-            itBookHandler = object : ItBookHandler {
+            itBookSearchHandler = object : ItBookSearchHandler {
                 override fun onSuccess(response: SearchListResponse) {
                     onSuccess(response)
                 }

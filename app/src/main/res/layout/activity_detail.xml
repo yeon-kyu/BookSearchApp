@@ -38,13 +38,12 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/notosanskr_bold"
                 android:text="@string/detail_header_text"
-                android:textSize="18sp"
                 android:textColor="@color/black"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
@@ -61,10 +60,10 @@
 
                 <ImageView
                     android:id="@+id/detail_img"
-                    android:layout_width="150dp"
-                    android:layout_height="200dp"
-                    android:scaleType="centerCrop"
                     loadImage="@{viewModel.imageUrl}"
+                    android:layout_width="180dp"
+                    android:layout_height="240dp"
+                    android:scaleType="centerCrop"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -74,12 +73,12 @@
                     android:id="@+id/detail_title_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="60dp"
+                    android:layout_marginStart="40dp"
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/notosanskr_regular"
                     android:text="@string/detail_title"
                     android:textColor="@color/dark_gray"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/detail_img" />
 
@@ -91,10 +90,9 @@
                     android:fontFamily="@font/notosanskr_regular"
                     android:paddingStart="0dp"
                     android:paddingEnd="20dp"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
                     android:text="@{viewModel.title}"
-                    app:layout_constraintBottom_toBottomOf="@+id/detail_title_label"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/detail_title_label"
                     app:layout_constraintTop_toTopOf="@+id/detail_title_label"
@@ -104,13 +102,13 @@
                     android:id="@+id/detail_subtitle_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginTop="12dp"
                     android:fontFamily="@font/notosanskr_regular"
                     android:text="@string/detail_subtitle"
                     android:textColor="@color/dark_gray"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="@+id/detail_title_label"
-                    app:layout_constraintTop_toBottomOf="@+id/detail_title_label" />
+                    app:layout_constraintTop_toBottomOf="@+id/detail_title_txt" />
 
                 <TextView
                     android:id="@+id/detail_subtitle_txt"
@@ -119,25 +117,106 @@
                     android:fontFamily="@font/notosanskr_regular"
                     android:paddingStart="0dp"
                     android:paddingEnd="20dp"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
                     android:text="@{viewModel.subTitle}"
-                    app:layout_constraintBottom_toBottomOf="@+id/detail_subtitle_label"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/detail_title_txt"
                     app:layout_constraintTop_toTopOf="@+id/detail_subtitle_label"
                     tools:text="세계 최초의 책" />
 
                 <TextView
+                    android:id="@+id/detail_author_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/notosanskr_regular"
+                    android:text="@string/detail_author"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="@+id/detail_title_label"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_subtitle_txt" />
+
+                <TextView
+                    android:id="@+id/detail_author_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosanskr_regular"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="20dp"
+                    android:text="@{viewModel.author}"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/detail_title_txt"
+                    app:layout_constraintTop_toTopOf="@+id/detail_author_label"
+                    tools:text="최연규" />
+
+                <TextView
+                    android:id="@+id/detail_description_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/notosanskr_regular"
+                    android:text="@string/detail_description"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="@+id/detail_title_label"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_author_txt" />
+
+                <TextView
+                    android:id="@+id/detail_description_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosanskr_regular"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="20dp"
+                    android:text="@{viewModel.description}"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/detail_title_txt"
+                    app:layout_constraintTop_toTopOf="@id/detail_description_label"
+                    tools:text="백구의 생존일기를 그려냈다!" />
+
+                <TextView
+                    android:id="@+id/detail_year_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/notosanskr_regular"
+                    android:text="@string/detail_year"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="@+id/detail_title_label"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_description_txt" />
+
+                <TextView
+                    android:id="@+id/detail_year_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosanskr_regular"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="20dp"
+                    android:text="@{viewModel.year}"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/detail_title_txt"
+                    app:layout_constraintTop_toTopOf="@+id/detail_year_label"
+                    tools:text="2009.11.12" />
+
+                <TextView
                     android:id="@+id/detail_isbn_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginTop="12dp"
                     android:fontFamily="@font/notosanskr_regular"
-                    android:text="@string/detail_isbn"
+                    android:text="@string/detail_isbn13"
                     android:textColor="@color/dark_gray"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="@+id/detail_subtitle_label"
-                    app:layout_constraintTop_toBottomOf="@+id/detail_subtitle_label" />
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="@+id/detail_title_label"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_year_txt" />
 
                 <TextView
                     android:id="@+id/detail_isbn_txt"
@@ -146,19 +225,14 @@
                     android:fontFamily="@font/notosanskr_regular"
                     android:paddingStart="0dp"
                     android:paddingEnd="20dp"
+                    android:text="@{viewModel.isbn13}"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:text="@{viewModel.isbn}"
-                    app:layout_constraintBottom_toBottomOf="@+id/detail_isbn_label"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/detail_title_txt"
                     app:layout_constraintTop_toTopOf="@+id/detail_isbn_label"
                     tools:text="1231231231231" />
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-
         </ScrollView>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

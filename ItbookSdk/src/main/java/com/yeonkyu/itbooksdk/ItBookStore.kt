@@ -1,7 +1,8 @@
 package com.yeonkyu.itbooksdk
 
 import com.yeonkyu.itbooksdk.api.ItBookClient
-import com.yeonkyu.itbooksdk.api.ItBookHandler
+import com.yeonkyu.itbooksdk.api.ItBookInfoHandler
+import com.yeonkyu.itbooksdk.api.ItBookSearchHandler
 
 object ItBookStore {
 
@@ -22,15 +23,19 @@ object ItBookStore {
         return itBookClient ?: throw Exception("you must first call initItBook()")
     }
 
-    fun searchNormal(keyword: String, page: Int, itBookHandler: ItBookHandler) {
-        getItBookClient().searchNormal(keyword, page, itBookHandler)
+    fun searchNormal(keyword: String, page: Int, itBookSearchHandler: ItBookSearchHandler) {
+        getItBookClient().searchNormal(keyword, page, itBookSearchHandler)
     }
 
-    fun searchWithOperatorAnd(inc1: String, inc2: String, page: Int, itBookHandler: ItBookHandler) {
-        getItBookClient().searchWithOperatorAnd(inc1, inc2, page, itBookHandler)
+    fun searchWithOperatorAnd(inc1: String, inc2: String, page: Int, itBookSearchHandler: ItBookSearchHandler) {
+        getItBookClient().searchWithOperatorAnd(inc1, inc2, page, itBookSearchHandler)
     }
 
-    fun searchWithOperatorNot(inc: String, exc: String, page: Int, itBookHandler: ItBookHandler) {
-        getItBookClient().searchWithOperatorNot(inc, exc, page, itBookHandler)
+    fun searchWithOperatorNot(inc: String, exc: String, page: Int, itBookSearchHandler: ItBookSearchHandler) {
+        getItBookClient().searchWithOperatorNot(inc, exc, page, itBookSearchHandler)
+    }
+
+    fun fetchBookInfo(isbn: String, itBookInfoHandler: ItBookInfoHandler) {
+        getItBookClient().fetchBookInfo(isbn, itBookInfoHandler)
     }
 }
