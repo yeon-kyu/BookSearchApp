@@ -2,6 +2,7 @@ package com.yeonkyu.booksearchapp.repository
 
 import com.yeonkyu.itbooksdk.ItBookStore
 import com.yeonkyu.itbooksdk.api.ItBookSearchHandler
+import com.yeonkyu.itbooksdk.exception.ItBookException
 import com.yeonkyu.itbooksdk.response.SearchListResponse
 import timber.log.Timber
 import javax.inject.Inject
@@ -50,7 +51,7 @@ class SearchRepositoryImpl @Inject constructor(
                     onSuccess(response)
                 }
 
-                override fun onFail(exception: Exception) {
+                override fun onFail(exception: ItBookException) {
                     onFail(exception)
                 }
             }
@@ -73,7 +74,7 @@ class SearchRepositoryImpl @Inject constructor(
                     onSuccess(response)
                 }
 
-                override fun onFail(exception: Exception) {
+                override fun onFail(exception: ItBookException) {
                     onFail(exception)
                 }
             }
@@ -94,7 +95,7 @@ class SearchRepositoryImpl @Inject constructor(
                     onSuccess(response)
                 }
 
-                override fun onFail(exception: Exception) {
+                override fun onFail(exception: ItBookException) {
                     onFail(exception)
                 }
             })
