@@ -9,6 +9,7 @@
             name="viewModel"
             type="com.yeonkyu.booksearchapp.ui.detail.DetailViewModel" />
 
+        <import type="kotlin.text.StringsKt" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -100,6 +101,7 @@
 
                 <TextView
                     android:id="@+id/detail_subtitle_label"
+                    visibleIf='@{viewModel.subTitle.isEmpty() == false}'
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -112,6 +114,7 @@
 
                 <TextView
                     android:id="@+id/detail_subtitle_txt"
+                    visibleIf='@{viewModel.subTitle.isEmpty() == false}'
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/notosanskr_regular"
@@ -127,6 +130,7 @@
 
                 <TextView
                     android:id="@+id/detail_author_label"
+                    visibleIf='@{viewModel.author.isEmpty() == false}'
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -139,6 +143,7 @@
 
                 <TextView
                     android:id="@+id/detail_author_txt"
+                    visibleIf='@{viewModel.author.isEmpty() == false}'
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/notosanskr_regular"
@@ -154,6 +159,7 @@
 
                 <TextView
                     android:id="@+id/detail_description_label"
+                    visibleIf='@{viewModel.description.isEmpty() == false}'
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -166,6 +172,7 @@
 
                 <TextView
                     android:id="@+id/detail_description_txt"
+                    visibleIf='@{viewModel.description.isEmpty() == false}'
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/notosanskr_regular"
@@ -181,6 +188,7 @@
 
                 <TextView
                     android:id="@+id/detail_year_label"
+                    visibleIf='@{viewModel.year.isEmpty() == false}'
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -193,6 +201,7 @@
 
                 <TextView
                     android:id="@+id/detail_year_txt"
+                    visibleIf='@{viewModel.year.isEmpty() == false}'
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/notosanskr_regular"
@@ -208,6 +217,7 @@
 
                 <TextView
                     android:id="@+id/detail_isbn_label"
+                    visibleIf='@{viewModel.isbn13.isEmpty() == false}'
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -220,6 +230,7 @@
 
                 <TextView
                     android:id="@+id/detail_isbn_txt"
+                    visibleIf='@{viewModel.isbn13.isEmpty() == false}'
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/notosanskr_regular"
