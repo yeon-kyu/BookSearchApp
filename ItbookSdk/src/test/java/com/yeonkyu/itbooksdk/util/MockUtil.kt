@@ -11,7 +11,7 @@ object MockUtil {
 
     inline fun <reified T> mock(): T = Mockito.mock(T::class.java)
 
-    fun mockSearchResponse() = SearchResponse(
+    fun mockSearchResponse_MongoDB() = SearchResponse(
         title = "Practical MongoDB",
         subtitle = "Architecting, Developing, and Administering MongoDB",
         id = "9781484206485",
@@ -19,11 +19,27 @@ object MockUtil {
         url = "https://itbook.store/books/9781484206485"
     )
 
-    fun mockSearchListResponse() = SearchListResponse(
+    fun mockSearchResponse_Java() = SearchResponse(
+        title = "Effective JavaScript",
+        subtitle = "68 Specific Ways to Harness the Power of JavaScript",
+        id = "9780321812186",
+        image = "https://itbook.store/img/books/9780321812186.png",
+        url = "https://itbook.store/books/9780321812186"
+    )
+
+    fun mockSearchListResponse_MongoDB() = SearchListResponse(
         total = 71,
         page = 1,
         bookList = listOf(
-            mockSearchResponse()
+            mockSearchResponse_MongoDB()
+        )
+    )
+
+    fun mockSearchListResponse_Java() = SearchListResponse(
+        total = 1232,
+        page = 1,
+        bookList = listOf(
+            mockSearchResponse_Java()
         )
     )
 
