@@ -11,6 +11,7 @@ import com.yeonkyu.itbooksdk.util.MockUtil.mockErrorResponseBody
 import com.yeonkyu.itbooksdk.util.MockUtil.mockSearchListResponse_Java
 import com.yeonkyu.itbooksdk.util.MockUtil.mockSearchListResponse_MongoDB
 import com.yeonkyu.itbooksdk.util.MockUtil.mockSearchResponse_Java
+import com.yeonkyu.itbooksdk.util.MockUtil.mockSearchResponse_Java_WithoutScript
 import com.yeonkyu.itbooksdk.util.MockUtil.mockSearchResponse_MongoDB
 import com.yeonkyu.itbooksdk.util.SchedulersTestRule
 import io.reactivex.rxjava3.core.Single
@@ -164,7 +165,8 @@ class ItBookClientTest {
             page = 1,
             bookList = listOf(
                 mockSearchResponse_MongoDB(),
-                mockSearchResponse_Java()
+                mockSearchResponse_Java(),
+                mockSearchResponse_Java_WithoutScript()
             )
         )
         assertEquals(expected, successData)
@@ -217,7 +219,102 @@ class ItBookClientTest {
         var failData: ItBookException? = null
 
         // when
-        client.searchNormal("MongoDB", 1, object : ItBookSearchHandler {
+        client.searchWithOperatorAnd("MongoDB", "java", 1, object : ItBookSearchHandler {
+            override fun onSuccess(response: SearchListResponse) {
+                successData = response
+            }
+
+            override fun onFail(exception: ItBookException) {
+                failData = exception
+            }
+        })
+
+        // then
+        verify(service, atLeastOnce()).searchBooks("MongoDB", 1)
+        verify(service, atLeastOnce()).searchBooks("java", 1)
+        assertEquals(true, successData == null)
+        assertEquals(false, failData == null)
+        assertEquals(null, failData!!.statusCode)
+        assertEquals(mockMessage, failData!!.message)
+    }
+
+    /** searchWithOperatorNot() Test */
+    @Test
+    fun `searchWithOperatorNot Success Test`() {
+        // given
+        val mockJavaData = mockSearchListResponse_Java()
+        Mockito.`when`(service.searchBooks("java", 1)).thenReturn(Single.just(mockJavaData))
+
+        var successData: SearchListResponse? = null
+        var failData: Exception? = null
+
+        // when
+        client.searchWithOperatorNot("java", "script", 1, object : ItBookSearchHandler {
+            override fun onSuccess(response: SearchListResponse) {
+                successData = response
+            }
+
+            override fun onFail(exception: ItBookException) {
+                failData = exception
+            }
+        })
+
+        // then
+        verify(service, atLeastOnce()).searchBooks("java", 1)
+        assertEquals(false, successData == null)
+        assertEquals(true, failData == null)
+
+        val expected = SearchListResponse(
+            total = mockJavaData.total,
+            page = mockJavaData.page,
+            bookList = listOf(
+                mockSearchResponse_Java_WithoutScript()
+            )
+        )
+        assertEquals(expected, successData)
+    }
+
+    @Test
+    fun `searchWithOperatorNot Http Exception Test`() {
+        // given
+        val mockErrorResponseBody = mockErrorResponseBody()
+        val mockResponse = Response.error<SearchListResponse>(404, mockErrorResponseBody)
+        Mockito.`when`(service.searchBooks("MongoDB", 1)).thenReturn(Single.error(HttpException(mockResponse)))
+
+        var successData: SearchListResponse? = null
+        var failData: ItBookException? = null
+
+        // when
+        client.searchWithOperatorNot("MongoDB", "java", 1, object : ItBookSearchHandler {
+            override fun onSuccess(response: SearchListResponse) {
+                successData = response
+            }
+
+            override fun onFail(exception: ItBookException) {
+                failData = exception
+            }
+        })
+
+        // then
+        verify(service, atLeastOnce()).searchBooks("MongoDB", 1)
+        assertEquals(true, successData == null)
+        assertEquals(false, failData == null)
+        assertEquals(404, failData!!.statusCode)
+        assertEquals(ExceptionGenerator.SDK_ERROR, failData!!.message)
+    }
+
+    @Test
+    fun `searchWithOperatorNot other Exception Test`() {
+        // given
+        val mockMessage = "foo"
+        val mockException = RuntimeException(mockMessage)
+        Mockito.`when`(service.searchBooks("MongoDB", 1)).thenReturn(Single.error(mockException))
+
+        var successData: SearchListResponse? = null
+        var failData: ItBookException? = null
+
+        // when
+        client.searchWithOperatorNot("MongoDB", "java", 1, object : ItBookSearchHandler {
             override fun onSuccess(response: SearchListResponse) {
                 successData = response
             }

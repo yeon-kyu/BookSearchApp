@@ -27,6 +27,14 @@ object MockUtil {
         url = "https://itbook.store/books/9780321812186"
     )
 
+    fun mockSearchResponse_Java_WithoutScript() = SearchResponse(
+        title = "Java Cookbook, 2nd Edition",
+        subtitle = "Solutions and Examples for Java Developers",
+        id = "9780596007010",
+        image = "https://itbook.store/img/books/9780596007010.png",
+        url = "https://itbook.store/books/9780596007010"
+    )
+
     fun mockSearchListResponse_MongoDB() = SearchListResponse(
         total = 71,
         page = 1,
@@ -39,7 +47,8 @@ object MockUtil {
         total = 1232,
         page = 1,
         bookList = listOf(
-            mockSearchResponse_Java()
+            mockSearchResponse_Java(),
+            mockSearchResponse_Java_WithoutScript()
         )
     )
 
