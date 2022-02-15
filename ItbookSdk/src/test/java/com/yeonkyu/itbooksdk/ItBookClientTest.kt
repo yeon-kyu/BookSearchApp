@@ -342,15 +342,15 @@ class ItBookClientTest {
     @Test
     fun `fetchBookInfo Success Test`() {
         // given
-        val mockIsbn = "9781484206485"
+        val isbn = "9781484206485"
         val mockData = mockBookInfoResponse()
-        Mockito.`when`(service.fetchBookInfo(mockIsbn)).thenReturn(Single.just(mockData))
+        Mockito.`when`(service.fetchBookInfo(isbn)).thenReturn(Single.just(mockData))
 
         var successData: BookInfoResponse? = null
         var failData: ItBookException? = null
 
         // when
-        client.fetchBookInfo(mockIsbn, itBookInfoHandler = object : ItBookInfoHandler {
+        client.fetchBookInfo(isbn, itBookInfoHandler = object : ItBookInfoHandler {
             override fun onSuccess(response: BookInfoResponse) {
                 successData = response
             }
@@ -361,7 +361,7 @@ class ItBookClientTest {
         })
 
         // then
-        verify(service, atLeastOnce()).fetchBookInfo(mockIsbn)
+        verify(service, atLeastOnce()).fetchBookInfo(isbn)
         assertEquals(false, successData == null)
         assertEquals(true, failData == null)
         assertEquals(mockData, successData)
@@ -370,16 +370,16 @@ class ItBookClientTest {
     @Test
     fun `fetchBookInfo Http Exception Test`() {
         // given
-        val mockIsbn = "9781484206485"
+        val isbn = "9781484206485"
         val mockErrorResponseBody = mockErrorResponseBody()
         val mockResponse = Response.error<BookInfoResponse>(404, mockErrorResponseBody)
-        Mockito.`when`(service.fetchBookInfo(mockIsbn)).thenReturn(Single.error(HttpException(mockResponse)))
+        Mockito.`when`(service.fetchBookInfo(isbn)).thenReturn(Single.error(HttpException(mockResponse)))
 
         var successData: BookInfoResponse? = null
         var failData: ItBookException? = null
 
         // when
-        client.fetchBookInfo(mockIsbn, itBookInfoHandler = object : ItBookInfoHandler {
+        client.fetchBookInfo(isbn, itBookInfoHandler = object : ItBookInfoHandler {
             override fun onSuccess(response: BookInfoResponse) {
                 successData = response
             }
@@ -390,7 +390,7 @@ class ItBookClientTest {
         })
 
         // then
-        verify(service, atLeastOnce()).fetchBookInfo(mockIsbn)
+        verify(service, atLeastOnce()).fetchBookInfo(isbn)
         assertEquals(true, successData == null)
         assertEquals(false, failData == null)
         assertEquals(404, failData!!.statusCode)
@@ -400,16 +400,16 @@ class ItBookClientTest {
     @Test
     fun `fetchBookInfo other Exception Test`() {
         // given
-        val mockIsbn = "9781484206485"
+        val isbn = "9781484206485"
         val mockMessage = "foo"
         val mockException = RuntimeException(mockMessage)
-        Mockito.`when`(service.fetchBookInfo(mockIsbn)).thenReturn(Single.error(mockException))
+        Mockito.`when`(service.fetchBookInfo(isbn)).thenReturn(Single.error(mockException))
 
         var successData: BookInfoResponse? = null
         var failData: ItBookException? = null
 
         // when
-        client.fetchBookInfo(mockIsbn, itBookInfoHandler = object : ItBookInfoHandler {
+        client.fetchBookInfo(isbn, itBookInfoHandler = object : ItBookInfoHandler {
             override fun onSuccess(response: BookInfoResponse) {
                 successData = response
             }
@@ -420,7 +420,7 @@ class ItBookClientTest {
         })
 
         // then
-        verify(service, atLeastOnce()).fetchBookInfo(mockIsbn)
+        verify(service, atLeastOnce()).fetchBookInfo(isbn)
         assertEquals(true, successData == null)
         assertEquals(false, failData == null)
         assertEquals(null, failData!!.statusCode)
