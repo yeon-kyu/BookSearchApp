@@ -9,6 +9,7 @@ import com.yeonkyu.itbooksdk.exception.ItBookException
 import com.yeonkyu.itbooksdk.response.SearchListResponse
 import com.yeonkyu.itbooksdk.exception.ExceptionGenerator
 import com.yeonkyu.itbooksdk.response.BookInfoResponse
+import com.yeonkyu.itbooksdk.util.MockUtil.mock
 import com.yeonkyu.itbooksdk.util.MockUtil.mockBookInfoResponse
 import com.yeonkyu.itbooksdk.util.MockUtil.mockErrorResponseBody
 import com.yeonkyu.itbooksdk.util.MockUtil.mockSearchListResponse_Java
@@ -31,7 +32,7 @@ import retrofit2.Response
 class ItBookClientTest {
 
     private lateinit var client: ItBookClient
-    private val service: ItBookService = Mockito.mock(ItBookService::class.java)
+    private val service: ItBookService = mock()
 
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()

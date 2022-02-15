@@ -5,7 +5,7 @@ import com.yeonkyu.itbooksdk.api.ItBookInfoHandler
 import com.yeonkyu.itbooksdk.api.ItBookSearchHandler
 import com.yeonkyu.itbooksdk.exception.ExceptionGenerator
 
-object ItBookStore {
+object ItBookStore{
 
     private var itBookClient: ItBookClient? = null
 
@@ -14,13 +14,10 @@ object ItBookStore {
     }
 
     @Synchronized
-    fun initItBook(): Boolean {
+    fun initItBook() {
         if (itBookClient == null) {
             val itBookService = NetworkModule.provideItBookService()
             itBookClient = NetworkModule.provideItBookClient(itBookService)
-            return true
-        } else {
-            return false
         }
     }
 
