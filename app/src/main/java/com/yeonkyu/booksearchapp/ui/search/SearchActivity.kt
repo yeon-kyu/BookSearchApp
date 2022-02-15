@@ -3,11 +3,15 @@ package com.yeonkyu.booksearchapp.ui.search
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.ImageView
 import androidx.activity.viewModels
+import androidx.core.app.ActivityOptionsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import com.yeonkyu.booksearchapp.R
+import com.yeonkyu.booksearchapp.data.model.Book
 import com.yeonkyu.booksearchapp.databinding.ActivitySearchBinding
 import com.yeonkyu.booksearchapp.ui.detail.DetailActivity
 import com.yeonkyu.booksearchapp.util.RecyclerViewPager
@@ -60,11 +64,7 @@ class SearchActivity : AppCompatActivity() {
 
     private fun setUpListAdapter() {
         bookAdapter = BookAdapter { view, book ->
-            //todo
-            val intent = Intent(this, DetailActivity::class.java).apply {
-                putExtra(DetailActivity.BOOK_ISBN, book.id)
-            }
-            startActivity(intent)
+            startDetailActivity(view, book)
         }
         binding.recyclerview.apply {
             adapter = bookAdapter
@@ -102,5 +102,23 @@ class SearchActivity : AppCompatActivity() {
         viewModel.resetBookList()
         pager.resetPage()
         viewModel.fetchNextBookList(keyword, 1)
+    }
+
+    private fun startDetailActivity(view: View, book: Book) {
+        val intent = Intent(this, DetailActivity::class.java).apply {
+            putExtra(DetailActivity.BOOK_ISBN, book.id)
+            putExtra(DetailActivity.BOOK_IMAGE_URL, book.image)
+        }
+
+        val sharedElement = view.findViewById<ImageView>(R.id.book_img)
+
+        val activityOptions =
+            ActivityOptionsCompat.makeSceneTransitionAnimation(
+                this,
+                sharedElement,
+                DetailActivity.VIEW_NAME_IMAGE
+            )
+
+        startActivity(intent, activityOptions.toBundle())
     }
 }

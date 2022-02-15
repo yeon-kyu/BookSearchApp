@@ -15,5 +15,7 @@
     <string name="detail_author">작가</string>
     <string name="detail_description">설명</string>
     <string name="detail_year">출판 연도</string>
+    <string name="detail_no_isbn_alert">책의 isbn 을 가오지 못했습니다.</string>
+    <string name="detail_no_image_alert">책의 이미지를 가져오지 못했습니다.</string>
 
 </resources>

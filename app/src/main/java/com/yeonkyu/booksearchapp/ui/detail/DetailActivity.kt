@@ -1,10 +1,11 @@
 package com.yeonkyu.booksearchapp.ui.detail
 
 import android.os.Bundle
+import android.transition.Transition
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
-import com.bumptech.glide.Glide
 import com.yeonkyu.booksearchapp.R
 import com.yeonkyu.booksearchapp.databinding.ActivityDetailBinding
 import com.yeonkyu.booksearchapp.util.makeDialog
@@ -32,11 +33,19 @@ class DetailActivity : AppCompatActivity() {
 
     private fun setUpView() {
         val isbn = intent.getStringExtra(BOOK_ISBN)
-        if (isbn == null) {
-            makeDialog("책의 isbn 을 가오지 못했습니다.", null)
-        } else {
+        val imgUrl = intent.getStringExtra(BOOK_IMAGE_URL)
+
+        if (isbn != null) {
             viewModel.getBookInfo(isbn)
+        } else {
+            makeDialog(getString(R.string.detail_no_isbn_alert), null)
         }
+        imgUrl?.let {
+            viewModel.imageUrl.postValue(imgUrl)
+        }
+
+        ViewCompat.setTransitionName(binding.detailImg, VIEW_NAME_IMAGE)
+        addTransitionListener()
 
         binding.detailCloseBt.setOnClickListener {
             finish()
@@ -49,7 +58,30 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
+    private fun addTransitionListener() {
+        window.sharedElementEnterTransition?.apply {
+            addListener(object : Transition.TransitionListener {
+                override fun onTransitionStart(transition: Transition?) = Unit
+
+                override fun onTransitionEnd(transition: Transition?) {
+                    transition?.removeListener(this)
+                }
+
+                override fun onTransitionCancel(transition: Transition?) {
+                    transition?.removeListener(this)
+                }
+
+                override fun onTransitionPause(transition: Transition?) = Unit
+
+                override fun onTransitionResume(transition: Transition?) = Unit
+            })
+        }
+    }
+
     companion object {
         const val BOOK_ISBN = "BOOK_ISBN"
+        const val BOOK_IMAGE_URL = "BOOK_IMAGE_URL"
+
+        const val VIEW_NAME_IMAGE = "detail:image"
     }
 }
