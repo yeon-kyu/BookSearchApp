@@ -11,5 +11,5 @@ interface ItBookSearchHandler {
 
 interface ItBookInfoHandler {
     fun onSuccess(response: BookInfoResponse)
-    fun onFail(exception: Exception)
+    fun onFail(exception: ItBookException)
 }

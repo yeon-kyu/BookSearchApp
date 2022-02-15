@@ -2,11 +2,14 @@ package com.yeonkyu.itbooksdk
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.yeonkyu.itbooksdk.api.ItBookClient
+import com.yeonkyu.itbooksdk.api.ItBookInfoHandler
 import com.yeonkyu.itbooksdk.api.ItBookSearchHandler
 import com.yeonkyu.itbooksdk.api.ItBookService
 import com.yeonkyu.itbooksdk.exception.ItBookException
 import com.yeonkyu.itbooksdk.response.SearchListResponse
 import com.yeonkyu.itbooksdk.exception.ExceptionGenerator
+import com.yeonkyu.itbooksdk.response.BookInfoResponse
+import com.yeonkyu.itbooksdk.util.MockUtil.mockBookInfoResponse
 import com.yeonkyu.itbooksdk.util.MockUtil.mockErrorResponseBody
 import com.yeonkyu.itbooksdk.util.MockUtil.mockSearchListResponse_Java
 import com.yeonkyu.itbooksdk.util.MockUtil.mockSearchListResponse_MongoDB
@@ -130,6 +133,7 @@ class ItBookClientTest {
         assertEquals(mockMessage, failData!!.message)
     }
 
+
     /** searchWithOperatorAnd() Test */
     @Test
     fun `searchWithOperatorAnd Success Test`() {
@@ -238,6 +242,7 @@ class ItBookClientTest {
         assertEquals(mockMessage, failData!!.message)
     }
 
+
     /** searchWithOperatorNot() Test */
     @Test
     fun `searchWithOperatorNot Success Test`() {
@@ -326,6 +331,96 @@ class ItBookClientTest {
 
         // then
         verify(service, atLeastOnce()).searchBooks("MongoDB", 1)
+        assertEquals(true, successData == null)
+        assertEquals(false, failData == null)
+        assertEquals(null, failData!!.statusCode)
+        assertEquals(mockMessage, failData!!.message)
+    }
+
+
+    /** fetchBookInfo() Test */
+    @Test
+    fun `fetchBookInfo Success Test`() {
+        // given
+        val mockIsbn = "9781484206485"
+        val mockData = mockBookInfoResponse()
+        Mockito.`when`(service.fetchBookInfo(mockIsbn)).thenReturn(Single.just(mockData))
+
+        var successData: BookInfoResponse? = null
+        var failData: ItBookException? = null
+
+        // when
+        client.fetchBookInfo(mockIsbn, itBookInfoHandler = object : ItBookInfoHandler {
+            override fun onSuccess(response: BookInfoResponse) {
+                successData = response
+            }
+
+            override fun onFail(exception: ItBookException) {
+                failData = exception
+            }
+        })
+
+        // then
+        verify(service, atLeastOnce()).fetchBookInfo(mockIsbn)
+        assertEquals(false, successData == null)
+        assertEquals(true, failData == null)
+        assertEquals(mockData, successData)
+    }
+
+    @Test
+    fun `fetchBookInfo Http Exception Test`() {
+        // given
+        val mockIsbn = "9781484206485"
+        val mockErrorResponseBody = mockErrorResponseBody()
+        val mockResponse = Response.error<BookInfoResponse>(404, mockErrorResponseBody)
+        Mockito.`when`(service.fetchBookInfo(mockIsbn)).thenReturn(Single.error(HttpException(mockResponse)))
+
+        var successData: BookInfoResponse? = null
+        var failData: ItBookException? = null
+
+        // when
+        client.fetchBookInfo(mockIsbn, itBookInfoHandler = object : ItBookInfoHandler {
+            override fun onSuccess(response: BookInfoResponse) {
+                successData = response
+            }
+
+            override fun onFail(exception: ItBookException) {
+                failData = exception
+            }
+        })
+
+        // then
+        verify(service, atLeastOnce()).fetchBookInfo(mockIsbn)
+        assertEquals(true, successData == null)
+        assertEquals(false, failData == null)
+        assertEquals(404, failData!!.statusCode)
+        assertEquals(ExceptionGenerator.SDK_ERROR, failData!!.message)
+    }
+
+    @Test
+    fun `fetchBookInfo other Exception Test`() {
+        // given
+        val mockIsbn = "9781484206485"
+        val mockMessage = "foo"
+        val mockException = RuntimeException(mockMessage)
+        Mockito.`when`(service.fetchBookInfo(mockIsbn)).thenReturn(Single.error(mockException))
+
+        var successData: BookInfoResponse? = null
+        var failData: ItBookException? = null
+
+        // when
+        client.fetchBookInfo(mockIsbn, itBookInfoHandler = object : ItBookInfoHandler {
+            override fun onSuccess(response: BookInfoResponse) {
+                successData = response
+            }
+
+            override fun onFail(exception: ItBookException) {
+                failData = exception
+            }
+        })
+
+        // then
+        verify(service, atLeastOnce()).fetchBookInfo(mockIsbn)
         assertEquals(true, successData == null)
         assertEquals(false, failData == null)
         assertEquals(null, failData!!.statusCode)
