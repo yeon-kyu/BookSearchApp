@@ -11,6 +11,8 @@ internal object ExceptionGenerator {
         }
     }
 
+    const val IT_BOOK_STORE_NOT_INITIATED = "you must first call initItBook()"
+
     const val INFORMATION_RESPONSE = "INFORMATION_RESPOND"
     const val SDK_ERROR = "SDK_ERROR"
     const val REDIRECTION_MESSAGE = "REDIRECTION_MESSAGE"

@@ -3,10 +3,15 @@ package com.yeonkyu.itbooksdk
 import com.yeonkyu.itbooksdk.api.ItBookClient
 import com.yeonkyu.itbooksdk.api.ItBookInfoHandler
 import com.yeonkyu.itbooksdk.api.ItBookSearchHandler
+import com.yeonkyu.itbooksdk.exception.ExceptionGenerator
 
 object ItBookStore {
 
     private var itBookClient: ItBookClient? = null
+
+    private fun getItBookClient(): ItBookClient {
+        return itBookClient ?: throw RuntimeException(ExceptionGenerator.IT_BOOK_STORE_NOT_INITIATED)
+    }
 
     @Synchronized
     fun initItBook(): Boolean {
@@ -17,10 +22,6 @@ object ItBookStore {
         } else {
             return false
         }
-    }
-
-    private fun getItBookClient(): ItBookClient {
-        return itBookClient ?: throw Exception("you must first call initItBook()")
     }
 
     fun searchNormal(keyword: String, page: Int, itBookSearchHandler: ItBookSearchHandler) {
