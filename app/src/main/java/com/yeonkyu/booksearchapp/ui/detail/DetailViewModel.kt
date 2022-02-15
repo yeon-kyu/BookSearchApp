@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.yeonkyu.booksearchapp.util.SingleLiveEvent
 import com.yeonkyu.itbooksdk.ItBookStore
 import com.yeonkyu.itbooksdk.api.ItBookInfoHandler
+import com.yeonkyu.itbooksdk.exception.ItBookException
 import com.yeonkyu.itbooksdk.response.BookInfoResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import timber.log.Timber
@@ -39,7 +40,7 @@ class DetailViewModel @Inject constructor(
                     year.postValue(response.year)
                 }
 
-                override fun onFail(exception: Exception) {
+                override fun onFail(exception: ItBookException) {
                     dialogEvent.postValue(exception.message)
                 }
             }
