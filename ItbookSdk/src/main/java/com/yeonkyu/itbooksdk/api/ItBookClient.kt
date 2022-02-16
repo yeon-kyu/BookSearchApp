@@ -7,6 +7,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import retrofit2.HttpException
+import java.net.UnknownHostException
 
 internal class ItBookClient constructor(
     private val service: ItBookService
@@ -20,6 +21,7 @@ internal class ItBookClient constructor(
             }, {
                 when (it) {
                     is HttpException -> itBookSearchHandler.onFail(generateHttpException(it.code()))
+                    is UnknownHostException -> itBookSearchHandler.onFail(ItBookException("check your network again", null))
                     else -> itBookSearchHandler.onFail(ItBookException(it.message ?: "searchNormalException", null))
                 }
             })
@@ -43,6 +45,7 @@ internal class ItBookClient constructor(
             }, {
                 when (it) {
                     is HttpException -> itBookSearchHandler.onFail(generateHttpException(it.code()))
+                    is UnknownHostException -> itBookSearchHandler.onFail(ItBookException("check your network again", null))
                     else -> itBookSearchHandler.onFail(ItBookException(it.message ?: "searchWithOperatorAndException", null))
                 }
             })
@@ -69,6 +72,7 @@ internal class ItBookClient constructor(
             }, {
                 when (it) {
                     is HttpException -> itBookSearchHandler.onFail(generateHttpException(it.code()))
+                    is UnknownHostException -> itBookSearchHandler.onFail(ItBookException("check your network again", null))
                     else -> itBookSearchHandler.onFail(ItBookException(it.message ?: "searchWithOperatorNotException", null))
                 }
             })
@@ -83,6 +87,7 @@ internal class ItBookClient constructor(
             }, {
                 when (it) {
                     is HttpException -> itBookInfoHandler.onFail(generateHttpException(it.code()))
+                    is UnknownHostException -> itBookInfoHandler.onFail(ItBookException("check your network again", null))
                     else -> itBookInfoHandler.onFail(ItBookException(it.message ?: "fetchBookInfoException", null))
                 }
             })
