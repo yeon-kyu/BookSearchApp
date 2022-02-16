@@ -23,10 +23,6 @@ class SearchRepositoryTest {
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
-    @Rule
-    @JvmField
-    val testSchedulersRule = SchedulersTestRule()
-
     @Before
     fun setup() {
         itBookStore = mock()
