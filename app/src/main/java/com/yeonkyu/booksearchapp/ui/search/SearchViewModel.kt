@@ -57,8 +57,8 @@ class SearchViewModel @Inject constructor(
                 isEnd.postValue(it.bookList.isEmpty())
             },
             onFail = {
+                Timber.e("search error : $it")
                 isLoading.postValue(false)
-                Timber.e("search error $it")
                 dialogEvent.postValue(it.message)
             }
         )

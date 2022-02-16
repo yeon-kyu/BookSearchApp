@@ -2,7 +2,6 @@ package com.yeonkyu.booksearchapp.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.yeonkyu.booksearchapp.data.mapper.toBookInfo
-import com.yeonkyu.booksearchapp.data.model.BookInfo
 import com.yeonkyu.booksearchapp.util.MockUtil.mockBookInfoResponse
 import com.yeonkyu.itbooksdk.ItBookStore
 import com.yeonkyu.itbooksdk.api.ItBookInfoHandler
@@ -37,7 +36,7 @@ class DetailRepositoryTest {
             (it.arguments[1] as ItBookInfoHandler).onSuccess(mockData)
         }
 
-        // when
+        // when + then
         repository.getBookInfo(
             isbn = "123123",
             onSuccess = {
