@@ -1,6 +1,7 @@
-# BookSearchApp
+# BookSearchApp - App & Sdk
 
-## Teck Stack & Library in App
+## Tech Stack & Libraries 
+# In App
 ### Architecture
 - MVVM Architecture
 - Repository Pattern
@@ -16,12 +17,14 @@
 - JUnit
 - Mockito
 
+<img src="https://github.com/yeon-kyu/BookSearchApp/blob/main/preview/app_unit_test.JPG" width="40%"/>
+
 ### Other Library
 - LeakCanary
 - Glide
 - Timber
 
-## Tech Stack & Library in Sdk
+# In Sdk
 ### Network
 - Retrofit & OkHttp
 - RxJava
@@ -29,3 +32,5 @@
 ### Unit Test
 - JUnit
 - Mockito
+
+<img src="https://github.com/yeon-kyu/BookSearchApp/blob/main/preview/sdk_unit_test.JPG" width="40%"/>
