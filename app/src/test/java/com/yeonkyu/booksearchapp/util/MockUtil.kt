@@ -7,7 +7,6 @@ import org.mockito.Mockito
 object MockUtil {
 
     inline fun <reified T> mock(): T = Mockito.mock(T::class.java)
-    fun <T> any(type: Class<T>): T = Mockito.any<T>(type)
 
     fun mockSearchResponse_Java() = SearchResponse(
         title = "Effective JavaScript",

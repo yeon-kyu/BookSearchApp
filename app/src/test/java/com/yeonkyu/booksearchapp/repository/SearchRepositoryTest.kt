@@ -6,13 +6,14 @@ import com.yeonkyu.booksearchapp.util.MockUtil.mockSearchListResponse_Java
 import com.yeonkyu.booksearchapp.util.SchedulersTestRule
 import com.yeonkyu.itbooksdk.ItBookStore
 import com.yeonkyu.itbooksdk.api.ItBookSearchHandler
-import com.yeonkyu.itbooksdk.exception.ItBookException
-import com.yeonkyu.itbooksdk.response.SearchListResponse
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito
-import org.mockito.Mockito.*
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
+import org.mockito.kotlin.any
 
 class SearchRepositoryTest {
 
@@ -32,51 +33,66 @@ class SearchRepositoryTest {
         repository = SearchRepositoryImpl(itBookStore)
     }
 
-
     @Test
-    fun `searchByKeyword Test`() {
+    fun `search By Keyword Test - should call searchNormal`() {
         // given
-        val mockHandler: ItBookSearchHandler = object : ItBookSearchHandler {
-            override fun onSuccess(response: SearchListResponse) {
-                print("success")
-
-            }
-            override fun onFail(exception: ItBookException) {
-                print("fail")
-
-            }
+        val mockData = mockSearchListResponse_Java()
+        Mockito.`when`(itBookStore.searchNormal(any(), any(), any())).thenAnswer {
+            (it.arguments[2] as ItBookSearchHandler).onSuccess(mockData)
         }
 
-        val mockData = mockSearchListResponse_Java()
-
-        //itBookStore.searchNormal("java", 1, mockHandler)
-
-        //val mockHandler2: ItBookSearchHandler = any2(ItBookSearchHandler::class.java)
-
-        `when`(itBookStore.searchNormal("java", 1, mockHandler))
-            .thenAnswer {
-                print("!")
-                (it.arguments[2] as ItBookSearchHandler).onSuccess(response = mockData)
-            }
-
-        var successData: SearchListResponse? = null
-        var failData: Exception? = null
-
+        // when + then
         repository.searchByKeyword(
-            "java",
-            1,
-            onStart = { Unit },
+            keyword = "java",
+            page = 1,
+            onStart = { },
             onSuccess = {
-                Unit
-                        },
-            onFail = {
-                Unit
-            }
+                assertEquals(mockData, it)
+            },
+            onFail = { }
         )
-        print("successData : $successData")
+        verify(itBookStore, times(1)).searchNormal(any(), any(), any())
+    }
 
-        // then
-        //verify(itBookStore, times(1)).searchNormal("java", 1, mockHandler)
+    @Test
+    fun `search By Keyword Test - should call searchWithOperatorAnd`() {
+        // given
+        val mockData = mockSearchListResponse_Java()
+        Mockito.`when`(itBookStore.searchWithOperatorAnd(any(), any(), any(), any())).thenAnswer {
+            (it.arguments[3] as ItBookSearchHandler).onSuccess(mockData)
+        }
 
+        // when + then
+        repository.searchByKeyword(
+            keyword = "java|kotlin",
+            page = 1,
+            onStart = { },
+            onSuccess = {
+                assertEquals(mockData, it)
+            },
+            onFail = { }
+        )
+        verify(itBookStore, times(1)).searchWithOperatorAnd(any(), any(), any(), any())
+    }
+
+    @Test
+    fun `search By Keyword Test - should call searchWithOperatorNot`() {
+        // given
+        val mockData = mockSearchListResponse_Java()
+        Mockito.`when`(itBookStore.searchWithOperatorNot(any(), any(), any(), any())).thenAnswer {
+            (it.arguments[3] as ItBookSearchHandler).onSuccess(mockData)
+        }
+
+        // when + then
+        repository.searchByKeyword(
+            keyword = "java-kotlin",
+            page = 1,
+            onStart = { },
+            onSuccess = {
+                assertEquals(mockData, it)
+            },
+            onFail = { }
+        )
+        verify(itBookStore, times(1)).searchWithOperatorNot(any(), any(), any(), any())
     }
 }
