@@ -1,5 +1,7 @@
 package com.yeonkyu.booksearchapp.di
 
+import com.yeonkyu.booksearchapp.repository.DetailRepository
+import com.yeonkyu.booksearchapp.repository.DetailRepositoryImpl
 import com.yeonkyu.booksearchapp.repository.SearchRepository
 import com.yeonkyu.booksearchapp.repository.SearchRepositoryImpl
 import com.yeonkyu.itbooksdk.ItBookStore
@@ -25,5 +27,13 @@ object RepositoryModule {
         itBookStore: ItBookStore
     ): SearchRepository {
         return SearchRepositoryImpl(itBookStore)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDetailRepository(
+        itBookStore: ItBookStore
+    ): DetailRepository {
+        return DetailRepositoryImpl(itBookStore)
     }
 }

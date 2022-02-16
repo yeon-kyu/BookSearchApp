@@ -2,18 +2,14 @@ package com.yeonkyu.booksearchapp.ui.detail
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.yeonkyu.booksearchapp.repository.DetailRepository
 import com.yeonkyu.booksearchapp.util.SingleLiveEvent
-import com.yeonkyu.itbooksdk.ItBookStore
-import com.yeonkyu.itbooksdk.api.ItBookInfoHandler
-import com.yeonkyu.itbooksdk.exception.ItBookException
-import com.yeonkyu.itbooksdk.response.BookInfoResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-
+    private val repository: DetailRepository
 ) : ViewModel() {
 
     val title = MutableLiveData("")
@@ -27,22 +23,19 @@ class DetailViewModel @Inject constructor(
     val dialogEvent = SingleLiveEvent<String>()
 
     fun getBookInfo(isbn: String) {
-        ItBookStore.fetchBookInfo(
+        repository.getBookInfo(
             isbn = isbn,
-            itBookInfoHandler = object : ItBookInfoHandler {
-                override fun onSuccess(response: BookInfoResponse) {
-                    title.postValue(response.title)
-                    subTitle.postValue(response.subtitle)
-                    imageUrl.postValue(response.img)
-                    isbn13.postValue(isbn)
-                    author.postValue((response.authors))
-                    description.postValue(response.desc)
-                    year.postValue(response.year)
-                }
-
-                override fun onFail(exception: ItBookException) {
-                    dialogEvent.postValue(exception.message)
-                }
+            onSuccess = {
+                title.postValue(it.title)
+                subTitle.postValue(it.subtitle)
+                imageUrl.postValue(it.img)
+                isbn13.postValue(isbn)
+                author.postValue((it.authors))
+                description.postValue(it.desc)
+                year.postValue(it.year)
+            },
+            onFail = {
+                dialogEvent.postValue(it.message)
             }
         )
     }
