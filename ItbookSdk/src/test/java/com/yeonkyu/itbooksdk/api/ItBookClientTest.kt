@@ -1,10 +1,7 @@
-package com.yeonkyu.itbooksdk
+package com.yeonkyu.itbooksdk.api
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.yeonkyu.itbooksdk.api.ItBookClient
-import com.yeonkyu.itbooksdk.api.ItBookInfoHandler
-import com.yeonkyu.itbooksdk.api.ItBookSearchHandler
-import com.yeonkyu.itbooksdk.api.ItBookService
+import com.yeonkyu.itbooksdk.NetworkModule
 import com.yeonkyu.itbooksdk.exception.ItBookException
 import com.yeonkyu.itbooksdk.response.SearchListResponse
 import com.yeonkyu.itbooksdk.exception.ExceptionGenerator
@@ -29,7 +26,7 @@ import org.mockito.Mockito.verify
 import retrofit2.HttpException
 import retrofit2.Response
 
-class ItBookClientTest {
+internal class ItBookClientTest {
 
     private lateinit var client: ItBookClient
     private val service: ItBookService = mock()

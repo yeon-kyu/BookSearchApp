@@ -10,7 +10,7 @@ import com.yeonkyu.itbooksdk.response.SearchListResponse
 import org.junit.Assert.*
 import org.junit.Test
 
-class ItBookStoreTest {
+internal class ItBookStoreTest {
 
     @Test
     fun `searchNormal Exception Test`() {

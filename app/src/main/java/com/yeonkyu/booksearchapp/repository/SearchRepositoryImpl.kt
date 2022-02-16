@@ -8,7 +8,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class SearchRepositoryImpl @Inject constructor(
-
+    private val itBookStore: ItBookStore
 ) : SearchRepository {
 
     override fun searchByKeyword(
@@ -42,7 +42,7 @@ class SearchRepositoryImpl @Inject constructor(
     ) {
         Timber.e("searchWithOperatorAnd start")
         val splitKeyword = keyword.split("|")
-        ItBookStore.searchWithOperatorAnd(
+        itBookStore.searchWithOperatorAnd(
             inc1 = splitKeyword[0],
             inc2 = splitKeyword[1],
             page = page,
@@ -65,7 +65,7 @@ class SearchRepositoryImpl @Inject constructor(
         onFail: (Exception) -> Unit
     ) {
         val splitKeyword = keyword.split("-")
-        ItBookStore.searchWithOperatorNot(
+        itBookStore.searchWithOperatorNot(
             inc = splitKeyword[0],
             exc = splitKeyword[1],
             page = page,
@@ -87,7 +87,7 @@ class SearchRepositoryImpl @Inject constructor(
         onSuccess: (SearchListResponse) -> Unit,
         onFail: (Exception) -> Unit
     ) {
-        ItBookStore.searchNormal(
+        itBookStore.searchNormal(
             keyword = keyword,
             page = page,
             itBookSearchHandler = object : ItBookSearchHandler {

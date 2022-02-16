@@ -1,6 +1,5 @@
 package com.yeonkyu.itbooksdk.util
 
-import com.google.gson.annotations.SerializedName
 import com.yeonkyu.itbooksdk.response.BookInfoResponse
 import com.yeonkyu.itbooksdk.response.SearchListResponse
 import com.yeonkyu.itbooksdk.response.SearchResponse
@@ -9,7 +8,7 @@ import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.mockito.Mockito
 
-object MockUtil {
+internal object MockUtil {
 
     inline fun <reified T> mock(): T = Mockito.mock(T::class.java)
 

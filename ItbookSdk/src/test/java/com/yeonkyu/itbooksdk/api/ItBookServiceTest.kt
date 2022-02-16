@@ -1,6 +1,5 @@
-package com.yeonkyu.itbooksdk
+package com.yeonkyu.itbooksdk.api
 
-import com.yeonkyu.itbooksdk.api.ItBookService
 import junit.framework.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test

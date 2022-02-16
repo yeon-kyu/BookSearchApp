@@ -1,4 +1,4 @@
-package com.yeonkyu.itbooksdk
+package com.yeonkyu.itbooksdk.api
 
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -11,7 +11,7 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.nio.charset.StandardCharsets
 
-abstract class ApiAbstract<T> {
+internal abstract class ApiAbstract<T> {
     lateinit var mockWebServer: MockWebServer
 
     @Before

@@ -25,14 +25,14 @@ class SearchViewModel @Inject constructor(
 
     private var lastKeyword: String? = null
 
+    /** 2번째 페이지 이후부터는 keyword 가 null */
     fun fetchNextBookList(keyword: String?, page: Int) {
-        if (lastKeyword == null && keyword != null) {
+        keyword?.let {
             /** initial search */
             searchByKeyword(keyword = keyword, page = 1)
-            return
-        }
-        lastKeyword?.let {
-            searchByKeyword(it, page)
+        } ?: run {
+            /** scroll search next */
+            searchByKeyword(lastKeyword!!, page)
         }
     }
 
