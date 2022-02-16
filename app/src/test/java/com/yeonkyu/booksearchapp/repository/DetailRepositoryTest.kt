@@ -19,14 +19,13 @@ import org.mockito.kotlin.verify
 class DetailRepositoryTest {
 
     private lateinit var repository: DetailRepository
-    private lateinit var itBookStore: ItBookStore
+    private val itBookStore: ItBookStore = mock()
 
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
     @Before
     fun setup() {
-        itBookStore = mock()
         repository = DetailRepositoryImpl(itBookStore)
     }
 
