@@ -83,7 +83,11 @@ class SearchActivity : AppCompatActivity() {
 
     private fun observeData() {
         viewModel.bookList.observe(this) {
-            bookAdapter.submitList(it.toList())
+            bookAdapter.submitList(it.toList()) {
+                /** called when recyclerview update is done */
+                viewModel.isLoading.postValue(false)
+            }
+
             if (it.isEmpty()) {
                 binding.searchExplainTxt.text = getString(R.string.search_empty_result)
             } else {

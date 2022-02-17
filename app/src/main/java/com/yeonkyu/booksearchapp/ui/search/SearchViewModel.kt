@@ -53,7 +53,6 @@ class SearchViewModel @Inject constructor(
                     _bookList.add(bookResponse.toBook())
                 }
                 bookList.postValue(_bookList)
-                isLoading.postValue(false)
                 isEnd.postValue(it.bookList.isEmpty())
             },
             onFail = {
