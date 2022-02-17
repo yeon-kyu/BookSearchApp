@@ -24,19 +24,6 @@
         </activity>
 
         <activity android:name=".ui.detail.DetailActivity" />
-        
-        <provider
-            android:authorities="${applicationId}.androidx-startup"
-            android:name="androidx.startup.InitializationProvider"
-            android:exported="false">
-            <meta-data
-                android:name="com.yeonkyu.booksearchapp.initializer.TimberInitializer"
-                android:value="androidx.startup" />
-
-            <meta-data
-                android:name="com.yeonkyu.booksearchapp.initializer.ItBookInitializer"
-                android:value="androidx.startup" />
-        </provider>
     </application>
 
 </manifest>

@@ -11,7 +11,6 @@
 - Lifecycle(LiveData)
 - DataBinding
 - ViewModel
-- Startup
 
 ### Unit Test
 - JUnit
