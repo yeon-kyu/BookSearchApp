@@ -3,7 +3,6 @@ package com.yeonkyu.booksearchapp.repository
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.yeonkyu.booksearchapp.util.MockUtil.mock
 import com.yeonkyu.booksearchapp.util.MockUtil.mockSearchListResponse_Java
-import com.yeonkyu.booksearchapp.util.SchedulersTestRule
 import com.yeonkyu.itbooksdk.ItBookStore
 import com.yeonkyu.itbooksdk.api.ItBookSearchHandler
 import org.junit.Assert.assertEquals
